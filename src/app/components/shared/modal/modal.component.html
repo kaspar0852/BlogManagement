@@ -1,0 +1,80 @@
+<div
+  *ngIf="isOpen"
+  class="fixed inset-0 z-50 overflow-y-auto"
+  aria-labelledby="modal-title"
+  role="dialog"
+  aria-modal="true"
+  @modal
+>
+  <!-- Backdrop -->
+  <div
+    class="fixed inset-0 bg-gray-500 bg-opacity-75 backdrop-blur-sm transition-opacity"
+  ></div>
+
+  <div
+    class="flex min-h-screen items-end justify-center p-4 text-center sm:items-center sm:p-0"
+  >
+    <div
+      class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-3xl"
+      @modal
+    >
+      <!-- Header -->
+      <div class="bg-white px-4 py-4 border-b border-gray-200">
+        <div class="flex items-center justify-between">
+          <h3
+            class="text-xl font-semibold leading-6 text-gray-900"
+            id="modal-title"
+          >
+            {{ title() }}
+          </h3>
+          <button
+            (click)="close.emit()"
+            class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          >
+            <span class="sr-only">Close</span>
+            <svg
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="bg-white px-4 py-5 sm:p-6">
+        <div class="max-h-[calc(100vh-16rem)] overflow-y-auto custom-scrollbar">
+          <ng-content></ng-content>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #666;
+  }
+</style>

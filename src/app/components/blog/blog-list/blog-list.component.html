@@ -1,0 +1,272 @@
+<div class="min-h-screen bg-gray-50 py-8">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header Section -->
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-2xl font-bold text-gray-900">Blog Posts</h1>
+      <a
+        routerLink="/create-blog"
+        class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-all duration-200 shadow-md hover:shadow-lg"
+      >
+        <svg
+          class="w-5 h-5 mr-2"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 4v16m8-8H4"
+          />
+        </svg>
+        Create New Post
+      </a>
+    </div>
+
+    <!-- Enhanced Search and Filter Section -->
+    <div class="mb-8 bg-white p-6 rounded-xl shadow-sm animate-fade-in">
+      <div class="flex flex-col md:flex-row gap-4">
+        <div class="flex-1 relative">
+          <div
+            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+          >
+            <svg
+              class="h-5 w-5 text-gray-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+          </div>
+          <input
+            type="text"
+            placeholder="Search posts..."
+            class="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200"
+            [formControl]="searchFormControl"
+          />
+        </div>
+        <div class="flex gap-3">
+          <!-- <select
+            class="px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white transition-all duration-200"
+          >
+            <option value="latest">Latest</option>
+            <option value="oldest">Oldest</option>
+            <option value="published">Published</option>
+            <option value="draft">Draft</option>
+          </select> -->
+          <button
+            class="px-4 py-2.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-200 flex items-center gap-2"
+            (click)="onFilterButtonClick()"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
+              />
+            </svg>
+            Filter
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Blog Posts Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      @for(blogPost of blogPosts(); track blogPost.id) {
+      <div
+        class="blog-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300"
+        [style]="'animation-delay: ' + $index * 0.1 + 's'"
+      >
+        <!-- Post Image -->
+        <div class="image-container relative h-48">
+          <img
+            [src]="getCoverImageUrl(blogPost)"
+            [alt]="blogPost.title"
+            class="w-full h-full object-cover"
+          />
+          <div class="absolute top-3 right-3">
+            <span
+              class="status-badge px-3 py-1 text-xs font-medium rounded-full shadow-lg backdrop-blur-sm"
+              [class]="
+                blogPost.isPublished
+                  ? 'bg-green-500/90 text-white'
+                  : 'bg-yellow-500/90 text-white'
+              "
+            >
+              {{ blogPost.isPublished ? "Published" : "Draft" }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Post Content -->
+        <div class="p-6">
+          <h2
+            class="text-xl font-semibold text-gray-800 mb-2 line-clamp-1 hover:text-indigo-600 cursor-pointer"
+          >
+            {{ blogPost.title }}
+          </h2>
+          <p class="text-gray-600 text-sm mb-4 line-clamp-2">
+            {{ blogPost.summary }}
+          </p>
+
+          <!-- Author and Date -->
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center space-x-2">
+              <div class="w-8 h-8 rounded-full overflow-hidden">
+                <img
+                  [src]="getAuthorImageUrl(blogPost)"
+                  alt="Author avatar"
+                  class="w-full h-full object-cover"
+                  onerror="this.src='/assets/default-avatar.jpg'; this.onerror=null;"
+                />
+              </div>
+              <span class="text-sm text-gray-600">{{
+                blogPost?.author?.username
+              }}</span>
+            </div>
+            <span class="text-sm text-gray-500">
+              {{ blogPost.createdAt | date : "mediumDate" }}
+            </span>
+          </div>
+
+          <!-- Actions -->
+          <div
+            class="flex items-center justify-between pt-4 border-t border-gray-100"
+          >
+            <button
+              class="action-button text-indigo-600 hover:text-indigo-800 hover:bg-indigo-50 px-4 py-2 rounded-lg transition-all duration-200"
+              [routerLink]="['/blogs', blogPost.id]"
+            >
+              Read More
+              <svg
+                class="w-4 h-4 ml-1 inline-block"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+
+            <div class="flex space-x-2">
+              <button
+                class="p-1.5 text-gray-500 hover:text-indigo-600 rounded-full hover:bg-indigo-50 transition-all duration-200"
+                (click)="onEditButtonClick(blogPost)"
+              >
+                <svg
+                  class="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                  />
+                </svg>
+              </button>
+              <button
+                class="p-1.5 text-gray-5 00 hover:text-red-600 rounded-full hover:bg-red-50 transition-all duration-200"
+                (click)="deleteBlogPost(blogPost.id)"
+              >
+                <svg
+                  class="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+
+    <!-- Empty State -->
+    @if(blogPosts().length === 0) {
+    <div class="text-center py-12 bg-white rounded-lg shadow-sm">
+      <svg
+        class="mx-auto h-12 w-12 text-gray-400"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+        />
+      </svg>
+      <h3 class="mt-2 text-sm font-medium text-gray-900">No posts yet</h3>
+      <p class="mt-1 text-sm text-gray-500">
+        Get started by creating your first blog post.
+      </p>
+      <div class="mt-6">
+        <a
+          routerLink="/create-blog"
+          class="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition-all duration-200"
+        >
+          <svg
+            class="w-5 h-5 mr-2"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 4v16m8-8H4"
+            />
+          </svg>
+          Create New Post
+        </a>
+      </div>
+    </div>
+    } @if (selectedBlogPost()){
+    <app-modal
+      [isOpen]="isEditModalOpen()"
+      (close)="closeEditModal()"
+      title="Edit Blog Post"
+    >
+      <div class="p-4">
+        <app-edit-blog
+          [blogPost]="selectedBlogPost()!"
+          (updated)="onBlogUpdated($event)"
+          (close)="closeEditModal()"
+        />
+      </div>
+    </app-modal>
+    }
+  </div>
+</div>

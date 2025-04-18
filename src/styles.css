@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .btn-primary {
+    @apply bg-blue-500 text-white px-4 py-2 rounded;
+  }
+}
+
+/* Add these styles for toast positioning */
+.toast-container {
+  position: fixed;
+  top: 20px; /* Distance from top */
+  right: 20px; /* Distance from right */
+  z-index: 1000; /* Ensure toast appears above other elements */
+}
+
+.toast {
+  min-width: 250px;
+  margin-bottom: 10px;
+}
