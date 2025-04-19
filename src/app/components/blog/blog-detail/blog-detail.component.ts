@@ -4,11 +4,12 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { BlogService } from '../blog.service';
 import { BlogPostResponseDto } from '../blog.model';
 import { ToastService } from '../../shared/toast/toast.service';
+import { CommentListComponent } from '../comment/comment-list/comment-list.component';
 
 @Component({
   selector: 'app-blog-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, CommentListComponent],
   templateUrl: './blog-detail.component.html',
   styleUrl: './blog-detail.component.css',
 })

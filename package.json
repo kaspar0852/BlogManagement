@@ -22,13 +22,15 @@
     "@microsoft/signalr": "^8.0.7",
     "@ngrx/effects": "^17.2.0",
     "@ngrx/store": "^17.2.0",
+    "dotenv": "^16.5.0",
+    "dotenv-webpack": "^8.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.3.9",
-    "@angular/cli": "^17.3.9",
+    "@angular/cli": "^17.3.16",
     "@angular/compiler-cli": "^17.3.0",
     "@types/jasmine": "~5.1.0",
     "autoprefixer": "^10.4.20",

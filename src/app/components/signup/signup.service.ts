@@ -2,14 +2,16 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, Observable, of, throwError } from 'rxjs';
 import { SignupRequestDto, SignupResponseDto } from './signup.model';
+import { EnvService } from '../../services/env.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SignupService {
-  private readonly rootUrl = 'http://localhost:5239/api/Auth/register';
-
   private http = inject(HttpClient);
+  private envService = inject(EnvService);
+  
+  private readonly rootUrl = `${this.envService.getApiBaseUrl()}/Auth/register`;
 
   signup(
     signupRequest: SignupRequestDto

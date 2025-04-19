@@ -208,6 +208,11 @@
             </span>
           </div>
         </div>
+
+        <!-- Comments Section -->
+        <div class="mt-12 pt-8 border-t border-gray-200 animate-fadeIn">
+          <app-comment-list [blogPostId]="blogPost()?.id!"> </app-comment-list>
+        </div>
       </div>
     </article>
     } @else {

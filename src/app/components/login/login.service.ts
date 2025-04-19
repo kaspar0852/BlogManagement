@@ -9,12 +9,14 @@ import {
   tap,
   throwError,
 } from 'rxjs';
+import { EnvService } from '../../services/env.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  private readonly rootUrl = 'http://localhost:5239/api/Auth/login';
+  private envService = inject(EnvService);
+  private readonly rootUrl = `${this.envService.getApiBaseUrl()}/Auth/login`;
   private readonly USER_STATE_KEY = 'userState';
 
   // Update to use the actual user state object

@@ -1,0 +1,33 @@
+<form [formGroup]="commentForm" (ngSubmit)="submitComment()" class="mt-4">
+  <div
+    class="border border-gray-300 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-indigo-500 focus-within:border-indigo-500"
+  >
+    <textarea
+      formControlName="content"
+      rows="3"
+      placeholder="Write a comment..."
+      class="block w-full border-0 py-3 px-4 resize-none focus:outline-none focus:ring-0"
+    ></textarea>
+
+    <div class="bg-gray-50 p-3 flex justify-end">
+      <button
+        type="submit"
+        [disabled]="!commentForm.valid"
+        class="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        Post Comment
+      </button>
+    </div>
+  </div>
+
+  @if (commentForm.get('content')?.invalid &&
+  commentForm.get('content')?.touched) {
+  <div class="mt-1 text-sm text-red-600">
+    @if (commentForm.get('content')?.errors?.['required']) {
+    <span>Comment cannot be empty</span>
+    } @if (commentForm.get('content')?.errors?.['minlength']) {
+    <span>Comment must be at least 3 characters</span>
+    }
+  </div>
+  }
+</form>

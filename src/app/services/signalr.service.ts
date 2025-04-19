@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { LoggerService } from './logger.service';
 import { ToastService } from '../components/shared/toast/toast.service';
 import { HubBlogData } from '../components/blog/blog.model';
+import { EnvService } from './env.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,7 @@ export class SignalRService {
   private hubConnection!: signalR.HubConnection;
   private toastr = inject(ToastService);
   private logger = inject(LoggerService);
+  private envService = inject(EnvService);
 
   // Subjects to emit notifications to components
   private newBlogSubject = new Subject<any>();
@@ -21,7 +23,7 @@ export class SignalRService {
   public startConnection = async () => {
     try {
       this.hubConnection = new signalR.HubConnectionBuilder()
-        .withUrl(`http://localhost:5239/blogHub`) // Update with your hub URL
+        .withUrl(this.envService.getApiHubUrl())
         .withAutomaticReconnect()
         .build();
 

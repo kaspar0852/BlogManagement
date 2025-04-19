@@ -7,16 +7,20 @@ import {
   FileMetadata,
   UpdateBlogPost,
 } from './blog.model';
+import { EnvService } from '../../services/env.service';
 
 @Injectable({ providedIn: 'root' })
 export class BlogService {
   //Dependency injections
   private http = inject(HttpClient);
 
+  //dependency on env service
+  private envService = inject(EnvService);
+  
   //definations
-  public readonly rootUrl = 'http://localhost:5239/api';
-  private readonly blogPostsUrl = `${this.rootUrl}/BlogPosts`;
-  private readonly mediaFilesUrl = `${this.rootUrl}/MediaFiles`;
+  private readonly apiBaseUrl = this.envService.getApiBaseUrl();
+  private readonly blogPostsUrl = `${this.apiBaseUrl}/BlogPosts`;
+  private readonly mediaFilesUrl = `${this.apiBaseUrl}/MediaFiles`;
 
   //methods
   getBlogPosts(searchQuery: string | null): Observable<BlogPostResponseDto[]> {

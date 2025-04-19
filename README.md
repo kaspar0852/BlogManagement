@@ -1,6 +1,26 @@
 # BlogManagement
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.9.
+A modern blog management application built with Angular 17, with features like user authentication, blog post management, real-time notifications, and commenting.
+
+## Features
+
+- User authentication and profile management
+- Blog post creation, editing, and viewing
+- Commenting system for blog posts
+- Real-time notifications via SignalR
+- Responsive UI with Tailwind CSS
+- State management with NgRx
+
+## Environment Setup
+
+The application uses environment variables for configuration. Create a `.env` file in the root directory with the following variables:
+
+```
+API_BASE_URL=http://localhost:5239/api
+API_HUB_URL=http://localhost:5239/blogHub
+```
+
+You can modify these values to point to your own backend server.
 
 ## Development server
 

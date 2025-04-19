@@ -24,6 +24,15 @@ export interface UpdateBlogPost {
   isPublished: boolean;
 }
 
+export interface CommentResponseDto {
+  id: number;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  author: User;
+  blogPostId: number;
+}
+
 export interface BlogPostResponseDto {
   id: number;
   title: string;
@@ -35,6 +44,7 @@ export interface BlogPostResponseDto {
   publishedAt: string;
   author: User;
   mediaFiles: MediaFile[];
+  comments: CommentResponseDto[];
 }
 
 export interface FileMetadata {

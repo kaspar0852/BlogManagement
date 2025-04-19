@@ -8,15 +8,18 @@ import { provideEffects } from '@ngrx/effects';
 import { provideStore } from '@ngrx/store';
 import { BlogEffects } from './state/blogs/blog.effects';
 import { blogReducer } from './state/blogs/blog.reducer';
+import { CommentEffects } from './state/comments/comment.effects';
+import { commentReducer } from './state/comments/comment.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideHttpClient(),
     provideAnimations(),
-    provideEffects([BlogEffects]),
+    provideEffects([BlogEffects, CommentEffects]),
     provideStore({
       blogs: blogReducer,
+      comments: commentReducer,
     }),
   ],
 };
